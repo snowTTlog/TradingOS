@@ -18,7 +18,7 @@ class Logger:
             level=logging.INFO,
             format="%(asctime)s | %(levelname)s | %(message)s",
             handlers=[
-                logging.FileHandler("logs/tradingos.log"),
+                logging.FileHandler("logs/tradingos.log", encoding="utf-8"),
                 logging.StreamHandler()
             ]
         )

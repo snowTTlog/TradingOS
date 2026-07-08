@@ -1,0 +1,6 @@
+{
+    "mode": "backtest",
+    "symbol": "BTCUSDT",
+    "timeframe": "1m",
+    "starting_balance": 10000
+}
