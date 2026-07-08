@@ -6,29 +6,47 @@ from src.strategies.simple_strategy import SimpleStrategy
 
 
 def on_system_start(data):
-    print(f"Event received: {data}")
+    print(f"📢 Event received: {data}")
 
 
 def main():
     logger = Logger.setup()
     logger.info("TradingOS Started")
 
+    # Event Bus
     bus = EventBus()
     bus.subscribe("system_start", on_system_start)
     bus.publish("system_start", "TradingOS is now running")
 
     print("=" * 50)
-    print(f"{Settings.APP_NAME} Starting...")
+    print(f"🚀 {Settings.APP_NAME} Starting...")
     print("=" * 50)
 
+    # Market Data
     market = MarketData()
     market.connect()
 
-    candle = market.get_candle()
+    # Mock BTCUSDT Data
+    market.update_price("BTCUSDT", 100000)
 
-    print("Current Price:", market.get_price())
+    market.update_candle(
+        "BTCUSDT",
+        {
+            "open": 100,
+            "high": 105,
+            "low": 99,
+            "close": 103,
+        },
+    )
+
+    # Retrieve Data
+    price = market.get_price("BTCUSDT")
+    candle = market.get_candle("BTCUSDT")
+
+    print("Current Price:", price)
     print("Current Candle:", candle)
 
+    # Strategy
     strategy = SimpleStrategy()
     signal = strategy.generate_signal(candle)
 
