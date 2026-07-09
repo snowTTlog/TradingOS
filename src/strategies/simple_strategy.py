@@ -2,13 +2,22 @@ from src.strategies.base_strategy import BaseStrategy
 
 
 class SimpleStrategy(BaseStrategy):
-    def __init__(self):
-        super().__init__()
-        self.name = "Simple Strategy"
 
     def generate_signal(self, candle):
-        if candle["close"] > candle["open"]:
+
+        if isinstance(candle, dict):
+            open_price = candle["open"]
+            close_price = candle["close"]
+
+        else:
+            open_price = candle.open
+            close_price = candle.close
+
+
+        if close_price > open_price:
             return "BUY"
-        if candle["close"] < candle["open"]:
+
+        elif close_price < open_price:
             return "SELL"
+
         return "HOLD"
